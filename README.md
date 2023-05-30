@@ -8,7 +8,7 @@ Arrancamos el servidor, vemos que no sale ninguna tarea por lo tanto vamos a añ
 Una vez añadidas la tareas, marcamos una como hecha.
 
 ```
-![mostrar](img/mostrar_lista.png)
+![mostrar](mostrar_lista.png)
 ```
 
 Ahora vamos a provar  a editar, clicamos en svg al lado del tic verde.
