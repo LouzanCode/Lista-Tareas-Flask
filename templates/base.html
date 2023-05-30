@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Gestor de Tareas</title>
+    <!--Google Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesomefree@6.1.2/css/fontawesome.min.css" integrity="sha384-
+    X8QTME3FCg1DLb58++lPvsjbQoCT9bp3MsUU3grbIny/3ZwUJkRNO8NPW6zqzuW9"
+    crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}"> 
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="header">
+  <a class="navbar-brand" href="/"><h1>GESTOR DE TAREAS</h1></a>
+</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    
+      <form class="d-flex" action="/buscar" method='post'>
+        
+        <input name="buscar" class="form-control me-2" type="search" placeholder="Buscar Tareas" aria-label="Search">
+        <button class="btn btn-outline-success bg-light" type="submit" right="10px">Buscar</button>
+      
+      </form>
+
+    </div>
+  </div>
+</nav>
+
+<div class="menu li">
+  <div class="col-3 menu">
+    <ul>
+      <li>
+      <a href="/crear-tarea" method="post">
+        <button class="button-85" role="button">AÑADIR TAREA</button></a>
+    </li>
+    <li>
+      <a href="/mostrar-pendientes" method="post">
+        <button class="button-85" role="button">TAREAS PENDIENTES</button></a>
+    </li>
+
+    </ul>
+  </div>
+
+  <div class="col-9">
+    <form action="/" method="post"></form>
+     {% for tarea in lista_de_tareas %}
+          <!--Creacion del objeto card-->
+            <div class="main" style="width: 75rem;">
+                 <span class="{% if tarea.hecha==true %} tarea_hecha {% endif %}"><h1>{{tarea.contenido}}</h1></span>
+                  <h4 class="card-subtitle mb-2 text-muted">{{tarea.categoria}}</h4>
+                  <date class="card_date">Fecha Límite: {{tarea.fecha_limite}}</date>
+                  
+                  <a class= "" href="/tarea-hecha/{{tarea.id}}" style="text-decoration:none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="green"
+                   class="bi bi-check2-square" viewBox="0 0 16 16">
+                    <path d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0
+                   1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5
+                   1.5 0 0 1-1.5 1.5H3z"/>
+                    <path d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0
+                   1 0-.708.708l3 3a.5.5 0 0 0 .708 0z"/>
+                    </svg>
+                   </a>
+                  
+                   <a href="/editar-tarea/{{tarea.id}}" method="post">
+                    <svg class="svg-icon" width="2em" height="2em" viewBox="0 0 20 20">
+                      <path d="M18.303,4.742l-1.454-1.455c-0.171-0.171-0.475-0.171-0.646,0l-3.061,3.064H2.019c-0.251,0-0.457,
+                      0.205-0.457,0.456v9.578c0,0.251,0.206,0.456,0.457,0.456h13.683c0.252,0,0.457-0.205,0.457-0.456V7.533l2.144-2.146C18.481,
+                      5.208,18.483,4.917,18.303,4.742 M15.258,15.929H2.476V7.263h9.754L9.695,9.792c-0.057,0.057-0.101,0.13-0.119,0.212L9.18,11.36h-3.98c-0.251,0-0.457,
+                      0.205-0.457,0.456c0,0.253,0.205,0.456,0.457,0.456h4.336c0.023,0,0.899,0.02,1.498-0.127c0.312-0.077,0.55-0.137,0.55-0.137c0.08-0.018,0.155-0.059,
+                      0.212-0.118l3.463-3.443V15.929z M11.241,11.156l-1.078,0.267l0.267-1.076l6.097-6.091l0.808,0.808L11.241,11.156z"></path>
+                    </svg>
+                  </a>
+
+                  <a href="/eliminar-tarea/{{tarea.id}}" style="text-decoration:none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="red"
+                   class="bi bi-trash" viewBox="0 0 16 16">
+                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5
+                   0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5
+                   0 0 0 1 0V6z"/>
+                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2
+                   0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1
+                   1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-
+                   1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                    </svg>
+                   </a>
+              
+              </div>
+              {% endfor %}
+            </form>
+          
+  </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
+{% block content %}
+
+{% endblock %}
+</body>
+</html>
+
+
+
